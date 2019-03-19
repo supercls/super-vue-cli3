@@ -43,6 +43,7 @@
                 <div class="tooth" v-for="(item,index) in pData2" :key="index">{{item.text}}</div>
               </div>
               <div class="area_grid">
+                  <span v-if="initIcon"></span>
               </div>
             </div>
             <div v-if="selectData.columns > 2">
@@ -92,6 +93,14 @@
         type: Boolean,
         default: false
       },
+      initIcon:{
+          type: Boolean,
+          default: false
+      }
+      // defaultValue: {
+      //     type: Object,
+      //     default: {}
+      // },
     },
     data () {
     return {
@@ -267,10 +276,11 @@
         var pos2 = 0
         var pos3 = 0
         if (defaultData[0] && defaultData[0].value) {
-        this.selects.select1 = defaultData[0]
+      //  this.selects.select1 = defaultData[0]  去除默认default
         for (var i = 0, len = this.pData1.length; i < len; i++) {
           if (this.pData1[i].value == defaultData[0].value) {
             pos1 = -(i*2)
+            this.selects.select1=this.pData1[i]  //2019-03-12
             break
           }
         }
@@ -280,11 +290,12 @@
       if(defaultData[1] && defaultData[1].value) {
         for (var i = 0, len = this.pData2.length; i < len; i++) {
           if (this.pData2[i].value == defaultData[1].value) {
+            this.selects.select2=this.pData2[i]  //2019-03-12
             pos2 = -(i*2)
             break
           }
         }
-        this.selects.select2 = defaultData[1]
+      //  this.selects.select2 = defaultData[1]
         city.setAttribute('top', pos2 + 'em');
         city.style["-webkit-transform"] = 'translate3d(0,' + pos2 + 'em,0)';
       }
@@ -292,12 +303,12 @@
         for (var i = 0, len = this.pData3.length; i < len; i++) {
           if (this.pData3[i].value == defaultData[2].value) {
             pos3 = -(i*2)
-
+            this.selects.select3=this.pData3[i]  //2019-03-12
             break
           }
         }
         this.posiTop=pos3
-        this.selects.select3 = defaultData[2]
+      //  this.selects.select3 = defaultData[2]
         county.setAttribute('top', pos3 + 'em');
         county.style["-webkit-transform"] = 'translate3d(0,' + pos3 + 'em,0)';
       }
@@ -335,7 +346,6 @@
       this.pData2 = this.selectData.pData2;
       this.pData3 = this.selectData.pData3;
     } else {
-      console.log(this.selectData)
       this.pData1 = this.selectData.pData1;
       this.pData2 = this.selectData.pData2[this.pData1[0].value]
       if (this.selectData.columns === 3) {
@@ -379,15 +389,42 @@
       deep: true
     },
     show (val) {
-      val && this.setTop(this.selectData.default || [])
+      let valueImport=this.$parent.keyValue ||''  //获取关键初始值
+      if(valueImport){  //取初始化的值
+          let dataArray=[]
+          if(!this.$parent.isTwo && !this.pData2){
+              let defaultValue={
+                  text:'',
+                  value:this.$parent.keyValue
+              }
+              dataArray.push(defaultValue)
+          }
+          else if(this.$parent.isTwo){
+              let Mlen=valueImport.split('.')
+              let defaultValue1={
+                  text:'',
+                  value:Mlen[0]
+              }
+              let defaultValue2={
+                  text:'',
+                  value:'.'+Mlen[1]   //后续弄成变量,jiben不会变
+              }
+              dataArray.push(defaultValue1)
+              dataArray.push(defaultValue2)
+          }
+          val && this.setTop(dataArray|| this.selectData.default || [])
+      }
+      else{         //取默认值
+          val && this.setTop(this.selectData.default || [])
+      }
+
     }
   }
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .gearArea {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 10px;
     background-color: rgba(0, 0, 0, 0.2);
     display: block;
@@ -403,9 +440,9 @@
   }
 
   .area_ctrl {
-    font-size: 12px;
+    font-size: 22px;
     vertical-align: middle;
-    background-color: #d5d8df;
+    background-color: #fff;
     color: #000;
     margin: 0;
     height: auto;
@@ -414,10 +451,8 @@
     width: 100%;
     left: 0;
     bottom: 0;
-    z-index: 9901;
+    z-index: 9999 !important;
     overflow: hidden;
-    /* -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0) */
   }
 
   .fade-enter-active,
@@ -478,17 +513,23 @@
     margin: 0;
     box-sizing: border-box;
     z-index: 0;
-    border-top: 1px solid #abaeb5;
-    border-bottom: 1px solid #abaeb5
+    border-top: 1px solid #F1F1F1;
+    border-bottom: 1px solid #F1F1F1;
   }
-
+  .area_grid span{
+    width: 10px;
+    height: 4px;
+    background: #B3B3B3;
+    display: inline-block;
+    color: #6B6B6B;
+  }
   .area_roll>div:nth-child(3) .area_grid>div {
     left: 42%
   }
 
   .area_btn {
     color: #0575f2;
-    font-size: 1.4em;
+    font-size: 32px;
     line-height: 1em;
     text-align: center;
     padding: .8em 1em
@@ -501,7 +542,7 @@
     height: 1px;
     width: 100%;
     display: block;
-    background-color: #96979b;
+    background-color: #EAEAEA;
     z-index: 15;
     -webkit-transform: scaleY(0.33);
     transform: scaleY(0.33)
@@ -520,7 +561,7 @@
     -webkit-align-items: stretch;
     -ms-flex-align: stretch;
     align-items: stretch;
-    background-color: #f1f2f4;
+    background-color: #fff;
     position: relative
   }
 
@@ -579,5 +620,8 @@
     top: 50%;
     left: 50%;
     right: 50%;
+  }
+  .larea_cancel{
+    color:  #646464;;
   }
 </style>

@@ -28,3 +28,6 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+
+//确认 点击的是哪个组件
+// 存值方式

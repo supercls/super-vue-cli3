@@ -5,8 +5,8 @@
 </template>
 <script>
 import helloWorld from "@/components/HelloWorld";
-import {login} from "@/api/login.js"
-import { mapGetters } from 'vuex'
+// import {login} from "@/api/login.js"
+// import { mapGetters } from 'vuex'
 export default {
     name:'hello',
     data(){
@@ -24,9 +24,9 @@ export default {
 
     },
     mounted(){
-        login(1,2).then(res=>{
-            console.log(res)
-        })
+        // login(1,2).then(res=>{
+        //     console.log(res)
+        // })
     },
     computed:{
 

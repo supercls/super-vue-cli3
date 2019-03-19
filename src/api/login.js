@@ -1,12 +1,9 @@
 import service from '@/utils/fetch.js'
-export function login(mobileTel, pwd) { //fetch  promise用法
+export function login(data) { //fetch  promise用法
     return service({
         url: 'api/User/LoginIn',
         method: 'post',
-        data: {
-            mobileTel: mobileTel,
-            pwd: pwd
-        }
+        data:data
     })
 }
 
@@ -16,13 +13,10 @@ export function login(mobileTel, pwd) { //fetch  promise用法
  * @param {String} imageData 图片文件
  * @param {String} suffix 文件后缀
  */
-export function uploadJoinMeImage(imageData, suffix) {
+export function uploadJoinMeImage(data) {
     return service({
         url: 'api/User/UploadJoinMeImage',
-        method: 'post',
-        data: {
-            "imageData": imageData,
-            "suffix": suffix
-        }
+        method: 'get',
+        params: data
     })
 }

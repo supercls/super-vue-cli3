@@ -70,7 +70,7 @@ export default {
 </script>
 
 <style lang="css">
-  @import "../../style/var.css";
+  @import "../../styles/var.css";
 
   @component-namespace mint {
     @component checklist {
@@ -81,7 +81,7 @@ export default {
 
       @descendent label {
         display: block;
-        padding: 0 10px;
+        padding: 0 20px;
       }
 
       @descendent title {
@@ -107,6 +107,7 @@ export default {
       @descendent label {
         vertical-align: middle;
         margin-left: 0px;
+
       }
 
       @descendent input {
@@ -133,7 +134,7 @@ export default {
       @descendent core {
         display: inline-block;
         background-color: $color-white;
-        /*border-radius: 100%;*/
+        border-radius:none;
         border: 1px solid #ccc;
         position: relative;
         size: 20px;
@@ -153,13 +154,8 @@ export default {
     }
   }
   .new-checklist{
-    height: 1rem;
-    line-height: 1rem;
-    font-size: 0.28rem;
-    color: #666;
-    border-bottom: 1px solid #eaeaea;
-    .mint-checkbox-core{
-      border-radius: none;
-    }
+    overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+    padding:20px 0px;
   }
 </style>

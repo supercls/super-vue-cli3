@@ -19,7 +19,7 @@ module.exports = {
     outputDir: 'dist',
     devServer: {
         open: 'Chrome',
-        port: 8080,
+        port: 8086,
         hot: false,
         host: '0.0.0.0',
         // 配置
@@ -35,10 +35,13 @@ module.exports = {
             .set( 'Base', resolve( 'src/base/css' ) )
             // 组件路径
             .set( 'Com', resolve( 'src/components' ) )
+            .set( 'Views', resolve( 'src/views' ) )
             //  models 逻辑实现路径
             .set( 'Mod', resolve( 'src/models' ) )
             //  until 路径
             .set( 'utils', resolve( 'src/utils' ) )
+            //    views 路径
+            .set( 'Views', resolve( 'src/views' ) )
             //  src 路径
             .set( '@', resolve( 'src' ) )
     }

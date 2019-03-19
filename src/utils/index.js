@@ -1,4 +1,4 @@
-export function getUrlParam(name) {  //获取地址栏上携带的参数
+export function getUrlParam(name) {  //
     if (window.location.href.indexOf('?') >= 0) {
         var a = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
         var t;
@@ -10,5 +10,3 @@ export function getUrlParam(name) {  //获取地址栏上携带的参数
     }
     return null;
 }
-
-//根据项目需要自行加载
